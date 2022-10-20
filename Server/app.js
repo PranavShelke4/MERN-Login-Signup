@@ -1,19 +1,11 @@
 const dotenv = require("dotenv");
-const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 
-// Db connect
-
 dotenv.config({ path: './config.env' });
+require('./db/conn');
 
-const DB = process.env.DATABASE;
-
-mongoose.connect(DB, {
-  useNewUrlParser: true
-}).then(() => {
-  console.log('Connection Succesful');
-}).catch((err) => console.log('Connection failed'));
+const PORT = process.env.PORT;
 
 const middlewares = (req, res, next) => {
     console.log('This is middlewares');
@@ -40,7 +32,7 @@ app.get("/signup", (req, res) => {
   res.send("This is Sign Up page");
 });
 
-app.listen(3000, () => {
-  console.log("server is runing on local host 3000");
+app.listen(PORT, () => {
+  console.log('server is runing at port 3000');
 });
 
