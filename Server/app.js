@@ -5,7 +5,9 @@ const app = express();
 
 // Db connect
 
-const DB = 'mongodb+srv://pranav:1q2w3e4r5t6y7u@cluster0.5tdwyjm.mongodb.net/?retryWrites=true&w=majority';
+dotenv.config({ path: './config.env' });
+
+const DB = process.env.DATABASE;
 
 mongoose.connect(DB, {
   useNewUrlParser: true
