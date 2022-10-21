@@ -56,6 +56,7 @@ router.post("/signup", async (req, res) => {
     await user.save();
 
     res.status(201).json({ message: "User Registered Successfuly" });
+
   } catch (err) {
     console.log(err);
   }
@@ -65,6 +66,7 @@ router.post("/signup", async (req, res) => {
 
 router.post("/signin", async (req, res) => {
   try {
+
     const { email, password } = req.body;
 
     if (!email | !password) {
@@ -73,13 +75,12 @@ router.post("/signin", async (req, res) => {
 
     const userLogin = await User.findOne({ email: email, password: password });
 
-    if(!userLogin){
+    if (!userLogin) {
       res.status(400).json({ error: "inviald data" });
-    }else{
+    } else {
       res.json({ error: "User Signin Successfuly" });
     }
-
-  
+    
   } catch (err) {
     console.log(err);
   }
