@@ -49,14 +49,15 @@ router.post("/signup", async (req, res) => {
 
     if (userExist) {
       return res.status(400).json({ error: "Email Already Exist" });
+    } else if (password != cpassword) {
+      return res.status(400).json({ error: "Password not match" });
+    } else {
+      const user = new User({ name, email, number, password, cpassword });
+
+      await user.save();
+
+      res.status(201).json({ message: "User Registered Successfuly" });
     }
-
-    const user = new User({ name, email, number, password, cpassword });
-
-    await user.save();
-
-    res.status(201).json({ message: "User Registered Successfuly" });
-
   } catch (err) {
     console.log(err);
   }
@@ -66,7 +67,6 @@ router.post("/signup", async (req, res) => {
 
 router.post("/signin", async (req, res) => {
   try {
-
     const { email, password } = req.body;
 
     if (!email | !password) {
@@ -80,7 +80,6 @@ router.post("/signin", async (req, res) => {
     } else {
       res.json({ error: "User Signin Successfuly" });
     }
-    
   } catch (err) {
     console.log(err);
   }
