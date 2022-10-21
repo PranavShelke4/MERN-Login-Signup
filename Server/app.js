@@ -27,9 +27,6 @@ app.get("/contect", (req, res) => {
   res.send("This is Contect page");
 });
 
-app.get("/signin", (req, res) => {
-  res.send("This is Sign In page");
-});
 
 app.listen(PORT, () => {
   console.log('server is runing at port 3000');
