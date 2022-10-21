@@ -61,7 +61,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// Login Code
+// Login API
 
 router.post("/signin", async (req, res) => {
   try {
