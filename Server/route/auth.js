@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcryptjs");
 
 require("../db/conn");
 const User = require("../model/userSchema");
@@ -73,12 +74,18 @@ router.post("/signin", async (req, res) => {
       return res.status(400).json({ error: "Plase Fill the all Fillde" });
     }
 
-    const userLogin = await User.findOne({ email: email, password: password });
+    const userLogin = await User.findOne({ email: email });
 
-    if (!userLogin) {
-      res.status(400).json({ error: "inviald data" });
+    if (userLogin) {
+      const userPassword = await bcrypt.compare(password, userLogin.password);
+
+      if (!userPassword) {
+        res.status(400).json({ error: "inviald Credentials" });
+      } else {
+        res.json({ error: "User Signin Successfuly" });
+      }
     } else {
-      res.json({ error: "User Signin Successfuly" });
+      res.status(400).json({ error: "inviald Credentials" });
     }
   } catch (err) {
     console.log(err);
