@@ -78,13 +78,18 @@ router.post("/signin", async (req, res) => {
 
     const userLogin = await User.findOne({ email: email });
 
-    // JWT tokan
-    
-    tokan = await userLogin.generateAuthToken();
-    console.log(tokan)
-
     if (userLogin) {
       const userPassword = await bcrypt.compare(password, userLogin.password);
+
+      // JWT tokan
+      tokan = await userLogin.generateAuthToken();
+      console.log(tokan);
+
+      // store tokan in cookies
+      res.cookie("jwtokan", tokan, {
+        expires: new Date(Date.now() + 25892000000),
+        httpOnly: true,
+      });
 
       if (!userPassword) {
         res.status(400).json({ error: "inviald Credentials" });
