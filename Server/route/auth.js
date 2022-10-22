@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
@@ -68,6 +69,7 @@ router.post("/signup", async (req, res) => {
 
 router.post("/signin", async (req, res) => {
   try {
+    let tokan;
     const { email, password } = req.body;
 
     if (!email | !password) {
@@ -75,6 +77,11 @@ router.post("/signin", async (req, res) => {
     }
 
     const userLogin = await User.findOne({ email: email });
+
+    // JWT tokan
+    
+    tokan = await userLogin.generateAuthToken();
+    console.log(tokan)
 
     if (userLogin) {
       const userPassword = await bcrypt.compare(password, userLogin.password);
