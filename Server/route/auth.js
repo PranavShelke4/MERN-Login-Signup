@@ -39,20 +39,20 @@ router.get("/", (req, res) => {
 
 //******************* Using async await ***************** */
 
-router.post("/signup", async (req, res) => {
+router.post("/register", async (req, res) => {
   const { name, email, number, password, cpassword } = req.body;
 
   if (!name | !email | !number | !password | !cpassword) {
-    return res.status(400).json({ error: "Plase Fill the all Fillde" });
+    return res.status(422).json({ error: "Plase Fill the all Fillde" });
   }
 
   try {
     const userExist = await User.findOne({ email: email });
 
     if (userExist) {
-      return res.status(400).json({ error: "Email Already Exist" });
+      return res.status(422).json({ error: "Email Already Exist" });
     } else if (password != cpassword) {
-      return res.status(400).json({ error: "Password not match" });
+      return res.status(422).json({ error: "Password not match" });
     } else {
       const user = new User({ name, email, number, password, cpassword });
 

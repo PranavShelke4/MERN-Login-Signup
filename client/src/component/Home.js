@@ -5,7 +5,9 @@ function Home() {
   return (
     <div>
       <Navbar />
-      Home
+      <div className="text-center mt-5">
+        <h1>Welcome to MERN Login & Signup App</h1>
+      </div>
     </div>
   );
 }
