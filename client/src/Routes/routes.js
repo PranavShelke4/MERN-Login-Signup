@@ -5,6 +5,7 @@ import About from '../component/About';
 import Contact from '../component/Contact';
 import Login from '../component/Login';
 import Signup from '../component/Signup';
+import Logout from '../component/Logout';
 
 function Routess() {
   return (

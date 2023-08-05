@@ -90,7 +90,7 @@ router.post("/signin", async (req, res) => {
       res.cookie("jwtokan", tokan, {
         expires: new Date(Date.now() + 25892000000),
         httpOnly: true,
-      });      
+      });
 
       if (!userPassword) {
         res.status(400).json({ error: "inviald Credentials" });
@@ -105,9 +105,16 @@ router.post("/signin", async (req, res) => {
   }
 });
 
-router.get('/about', Authenticate, (req, res) => {
+router.get("/about", Authenticate, (req, res) => {
   console.log("This is About page");
   res.send(req.rootUser);
+});
+
+//logout
+router.get("/logout", (req, res) => {
+  console.log("Hello my logout Page");
+  res.clearCookie("jwtokan", { path: "/" });
+  res.status(200).send("User Logout");
 });
 
 module.exports = router;

@@ -1,10 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
 function About() {
   const navigate = useNavigate();
+  const [userData, setUserData] = useState({});
 
   const callAboutPage = async () => {
     try {
@@ -19,6 +20,7 @@ function About() {
 
       const data = await res.json();
       console.log(data);
+      setUserData(data);
 
       if (!res.status === 200) {
         const error = new Error(res.error);
@@ -26,7 +28,7 @@ function About() {
       }
     } catch (err) {
       console.log(err);
-      navigate('/login');
+      navigate("/login");
     }
   };
 
@@ -39,7 +41,7 @@ function About() {
       <Navbar />
       <div className="container mt-4">
         <div className="jumbotron">
-          <h1 className="display-4">Pranav Shelke</h1>
+          <h1 className="display-4">{userData.name}</h1>
 
           <h3>Web Developer</h3>
           <p>Work links</p>
@@ -56,10 +58,10 @@ function About() {
             out within the larger container.
           </p>
 
-          <p>User ID : 123456789</p>
-          <p>Name : Pranav Shelke</p>
-          <p>email : pranavshelke4@gmail.com</p>
-          <p>phone : 1234567889</p>
+          <p>User ID : {userData._id}</p>
+          <p>Name : {userData.name}</p>
+          <p>email : {userData.email}</p>
+          <p>phone : {userData.number}</p>
           <p>Profession : Web developer</p>
           <p className="lead">
             <a className="btn btn-primary btn-lg" href="#" role="button">
