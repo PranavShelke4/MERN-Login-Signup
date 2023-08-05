@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const Authenticate = require("../middleware/authenticate");
 
 require("../db/conn");
 const User = require("../model/userSchema");
@@ -89,7 +90,7 @@ router.post("/signin", async (req, res) => {
       res.cookie("jwtokan", tokan, {
         expires: new Date(Date.now() + 25892000000),
         httpOnly: true,
-      });
+      });      
 
       if (!userPassword) {
         res.status(400).json({ error: "inviald Credentials" });
@@ -102,6 +103,11 @@ router.post("/signin", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+});
+
+router.get('/about', Authenticate, (req, res) => {
+  console.log("This is About page");
+  res.send(req.rootUser);
 });
 
 module.exports = router;

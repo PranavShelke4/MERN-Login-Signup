@@ -1,11 +1,42 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./Navbar";
+import { useNavigate } from "react-router-dom"; 
 
 function About() {
+  const navigate = useNavigate();
+
+  const callAboutPage = async () => {
+    try {
+      const res = await fetch("/about", {
+        method: "GET",
+        headers: {
+          Accept: "appllication/json",
+          "Content-type": "application/json",
+        },
+        credentials: "include", // Add this line to include cookies
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      if (!res.status === 200) {
+        const error = new Error(res.error);
+        throw error;
+      }
+    } catch (err) {
+      console.log(err);
+      navigate('/login');
+    }
+  };
+
+  useEffect(() => {
+    callAboutPage(); // eslint-disable-next-line
+  }, []);
+
   return (
     <>
-    <Navbar />
+      <Navbar />
       <div className="container mt-4">
         <div className="jumbotron">
           <h1 className="display-4">Pranav Shelke</h1>
